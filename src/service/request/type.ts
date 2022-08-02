@@ -9,4 +9,5 @@ export interface YURequestInterceptors {
 
 export interface YURequestConfig extends AxiosRequestConfig {
   interceptors?: YURequestInterceptors
+  showLoading?: boolean
 }

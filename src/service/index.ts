@@ -8,6 +8,12 @@ const yuRequest = new YURequest({
   interceptors: {
     requestInterceptor: (config) => {
       // 携带token的拦截
+      const token = ''
+      if (token) {
+        config.headers = {
+          authorization: token
+        }
+      }
       console.log('请求拦截')
       return config
     },
