@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    LOGIN
+    <!-- <img alt="Vue logo" src="../assets/logo.png" /> -->
     <!-- <el-button type="primary">哈哈哈</el-button>
     <el-button type="danger">hhh</el-button> -->
   </div>
