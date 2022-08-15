@@ -30,8 +30,8 @@ app.mount('#app')
 //     }
 //   }
 // })
-yuRequest.request({
-  url: '/home/multidata',
-  method: 'get',
-  showLoading: false
-})
+// yuRequest.request({
+//   url: '/home/multidata',
+//   method: 'get',
+//   showLoading: false
+// })

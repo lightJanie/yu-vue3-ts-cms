@@ -6,7 +6,7 @@ import { LoadingInstance } from 'element-plus/es/components/loading/src/loading'
 import { ElLoading } from 'element-plus'
 
 const DEFAULT_LOADING = true
-class HYRequest {
+class YURequest {
   instance: AxiosInstance
   interceptors?: YURequestInterceptors
   showLoading: boolean
@@ -33,7 +33,6 @@ class HYRequest {
     // 2.添加所有的实例都有的拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        console.log('所有实例都有的请求拦截器')
         if (this.showLoading) {
           this.loading = ElLoading.service({
             lock: true,
@@ -44,21 +43,20 @@ class HYRequest {
         return config
       },
       (err) => {
-        console.log('所有实例都有的请求拦截器，请求失败')
         return err
       }
     )
     this.instance.interceptors.response.use(
-      (config) => {
-        console.log('所有实例都有的响应拦截器')
-        setTimeout(() => {
-          this.loading?.close()
-        }, 1000)
-        // this.loading?.close()
-        return config
+      (res) => {
+        this.loading?.close()
+        const data = res.data
+        if (data.returnCode === '-1001') {
+          console.log('请求失败~, 错误信息')
+        } else {
+          return data
+        }
       },
       (err) => {
-        console.log('所有实例都有的响应拦截器')
         return err
       }
     )
@@ -100,4 +98,4 @@ class HYRequest {
   }
 }
 
-export default HYRequest
+export default YURequest

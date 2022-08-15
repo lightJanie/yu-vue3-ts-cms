@@ -46,7 +46,7 @@ export default defineComponent({
           // 2.开始进行登录验证
           store.dispatch('login/accountLoginAction', { ...account })
         }
-      }) 
+      })
     }
 
     return {

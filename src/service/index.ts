@@ -14,19 +14,15 @@ const yuRequest = new YURequest({
           authorization: token
         }
       }
-      console.log('请求拦截')
       return config
     },
     requestInterceptorCatch: (err) => {
-      console.log('请求异常拦截')
       return err
     },
     responseInterceptor: (res) => {
-      console.log('响应拦截')
       return res
     },
     responseInterceptorCatch: (err) => {
-      console.log('响应异常拦截')
       return err
     }
   }
