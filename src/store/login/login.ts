@@ -13,6 +13,8 @@ import { IAccount } from '@/service/login/type'
 import { ILoginState } from './types'
 import { IRootState } from '../types'
 
+import { mapMenusToRoutes } from '@/utils/map-menus'
+
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
   state() {
@@ -33,6 +35,10 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
+      const routes = mapMenusToRoutes(userMenus)
+      routes.forEach((route) => {
+        router.addRoute('main', route)
+      })
     }
   },
   actions: {

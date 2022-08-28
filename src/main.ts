@@ -15,7 +15,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 const app = createApp(App)
 app.use(globalRegister)
 app.use(store)
-setupStore()
+setupStore() //把浏览器缓存的token，userInfo，userMenus加载到store
 
 app.use(router)
 
