@@ -1,6 +1,7 @@
 <template>
   <div class="user">
-    <h2>user</h2>
+    <div class="search"></div>
+    <div class="content"></div>
   </div>
 </template>
 
@@ -15,4 +16,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.user {
+}
+</style>
