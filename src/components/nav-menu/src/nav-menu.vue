@@ -6,7 +6,7 @@
     </div>
     <el-menu
       class="el-menu-vertical"
-      default-active="2"
+      :default-active="defaultValue"
       :collapse="collapse"
       text-color="#b7bdc3"
       active-text-color="#0a60bd"
@@ -42,9 +42,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import { useStore } from '@/store'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 export default defineComponent({
   props: {
@@ -58,6 +58,11 @@ export default defineComponent({
     const userMenus = computed(() => store.state.login.userMenus)
 
     const router = useRouter()
+    const route = useRoute()
+    const currentPath = route.path
+
+    const defaultValue = ref('2')
+
     const handleMenuItemClick = (item: any) => {
       router.push({
         path: item.url ?? '/not-found'
@@ -65,6 +70,7 @@ export default defineComponent({
     }
     return {
       userMenus,
+      defaultValue,
       handleMenuItemClick
     }
   }
