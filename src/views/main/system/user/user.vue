@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <div class="search">
-      <hy-form :formItems="formItems"></hy-form>
+      <hy-form :formItems="formItems" :labelWidth="labelWidth"></hy-form>
     </div>
     <div class="content"></div>
   </div>
@@ -55,7 +55,8 @@ export default defineComponent({
         }
       }
     ]
-    return { formItems }
+    const labelWidth = '120px'
+    return { formItems, labelWidth }
   }
 })
 </script>

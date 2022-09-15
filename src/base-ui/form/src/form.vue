@@ -1,10 +1,10 @@
 <template>
   <div class="yu-form">
-    <el-form label-width="100px">
+    <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
           <el-col :span="8">
-            <el-form-item :label="item.label">
+            <el-form-item :label="item.label" :rules="item.rules">
               <template
                 v-if="item.type === 'input' || item.type === 'password'"
               >
@@ -43,6 +43,10 @@ export default defineComponent({
     formItems: {
       type: Array as PropType<IFormItem[]>,
       default: () => []
+    },
+    labelWidth: {
+      type: String,
+      default: '100px'
     }
   },
   setup() {
@@ -51,4 +55,8 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.yu-form {
+  padding-top: 22px;
+}
+</style>
