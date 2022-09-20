@@ -1,0 +1,52 @@
+[
+  {
+    "path": "/main/analysis/overview",
+    "name": "overview",
+    "children": []
+  },
+  {
+    "path": "/main/analysis/dashboard",
+    "name": "dashboard",
+    "children": []
+  },
+  {
+    "path": "/main/system/user",
+    "name": "user",
+    "children": []
+  },
+  {
+    "path": "/main/system/department",
+    "name": "department",
+    "children": []
+  },
+  {
+    "path": "/main/system/menu",
+    "name": "menu",
+    "children": []
+  },
+  {
+    "path": "/main/system/role",
+    "name": "role",
+    "children": []
+  },
+  {
+    "path": "/main/product/category",
+    "name": "category",
+    "children": []
+  },
+  {
+    "path": "/main/product/goods",
+    "name": "goods",
+    "children": []
+  },
+  {
+    "path": "/main/story/chat",
+    "name": "chat",
+    "children": []
+  },
+  {
+    "path": "/main/story/list",
+    "name": "list",
+    "children": []
+  }
+]

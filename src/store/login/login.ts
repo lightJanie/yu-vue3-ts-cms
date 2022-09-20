@@ -14,6 +14,7 @@ import { ILoginState } from './types'
 import { IRootState } from '../types'
 
 import { mapMenusToRoutes } from '@/utils/map-menus'
+import user from '@/router/main/system/user/user'
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -54,11 +55,13 @@ const loginModule: Module<ILoginState, IRootState> = {
       const userInfoResult = await requestUserInfoById(id)
       const userInfo = userInfoResult.data
       commit('changeUserInfo', userInfo)
+      console.log('userInfo', userInfo)
       localCache.setCache('userInfo', userInfo)
 
       //3.请求用户菜单
       const userMenusResult = await requestUserMenusByRoleId(userInfo.role.id)
       const userMenus = userMenusResult.data
+      console.log('userMenus', userMenus)
       commit('changeUserMenus', userMenus)
       localCache.setCache('userMenus', userMenus)
 

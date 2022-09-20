@@ -4,7 +4,11 @@
       <el-row>
         <template v-for="item in formItems" :key="item.label">
           <el-col :span="8">
-            <el-form-item :label="item.label" :rules="item.rules">
+            <el-form-item
+              :label="item.label"
+              :rules="item.rules"
+              :style="itemStyle"
+            >
               <template
                 v-if="item.type === 'input' || item.type === 'password'"
               >
@@ -47,6 +51,10 @@ export default defineComponent({
     labelWidth: {
       type: String,
       default: '100px'
+    },
+    itemStyle: {
+      type: Object,
+      default: () => ({ padding: '5px 40px' })
     }
   },
   setup() {
@@ -55,7 +63,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .yu-form {
   padding-top: 22px;
 }
