@@ -3,7 +3,7 @@
     <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
-          <el-col :span="8">
+          <el-col v-bind="colLayout">
             <el-form-item
               :label="item.label"
               :rules="item.rules"
@@ -55,6 +55,15 @@ export default defineComponent({
     itemStyle: {
       type: Object,
       default: () => ({ padding: '5px 40px' })
+    },
+    colLayout: {
+      type: Object,
+      default: () => ({
+        xl: 6, //>1920px 4个
+        lg: 8,
+        md: 12,
+        xs: 24
+      })
     }
   },
   setup() {
