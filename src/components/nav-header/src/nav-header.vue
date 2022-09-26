@@ -9,7 +9,7 @@
       </template>
     </el-icon>
     <div class="content">
-      <nav-breadcrumb></nav-breadcrumb>
+      <hy-breadcrumb></hy-breadcrumb>
       <user-info />
     </div>
   </div>
@@ -18,13 +18,13 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import UserInfo from './user-info.vue'
-import navBreadcrumb from './nav-breadcrumb.vue'
+import HyBreadcrumb from '@/base-ui/breadcrumb'
 
 export default defineComponent({
   emits: ['foldChange'],
   components: {
     UserInfo,
-    navBreadcrumb
+    HyBreadcrumb
   },
   setup(props, { emit }) {
     const isFold = ref(false)
