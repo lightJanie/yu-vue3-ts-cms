@@ -1,14 +1,14 @@
 <template>
   <div class="user">
     <div class="search">
-      <hy-form v-bind="formConfig"></hy-form>
+      <hy-form v-bind="formConfig" :formData="formData"></hy-form>
     </div>
     <div class="content"></div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import HyForm from '@/base-ui/form'
 import { formConfig } from './config/search.config'
 
@@ -18,7 +18,14 @@ export default defineComponent({
     HyForm
   },
   setup() {
-    return { formConfig }
+    const formData = reactive({
+      id: '',
+      name: '',
+      password: '',
+      sport: '',
+      createTime: ''
+    })
+    return { formConfig, formData }
   }
 })
 </script>

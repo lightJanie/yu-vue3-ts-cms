@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import UserInfo from './user-info.vue'
 import HyBreadcrumb, { IBreadcrumb } from '@/base-ui/breadcrumb'
 import { useStore } from '@/store'
@@ -38,13 +38,13 @@ export default defineComponent({
     }
 
     const store = useStore()
-    const userMenus = store.state.login.userMenus
-    const route = useRoute()
-    const currentPath = route.path
-    const breadcrumbs: IBreadcrumb[] = pathMapBreadcrumbs(
-      userMenus,
-      currentPath
-    )
+    const breadcrumbs = computed(() => {
+      const userMenus = store.state.login.userMenus
+      const route = useRoute()
+      const currentPath = route.path
+      return pathMapBreadcrumbs(userMenus, currentPath)
+    })
+
     return { isFold, handleFoldClick, breadcrumbs }
   }
 })

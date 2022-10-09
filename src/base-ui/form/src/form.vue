@@ -14,11 +14,16 @@
               >
                 <el-input
                   :placeholder="item.placeholder"
-                  show-password="item.type==='password'"
+                  :show-password="item.type === 'password'"
+                  v-model="formData[`${item.field}`]"
                 ></el-input>
               </template>
               <template v-else-if="item.type === 'select'">
-                <el-select :placeholder="item.placeholder" style="width: 100%">
+                <el-select
+                  :placeholder="item.placeholder"
+                  v-model="formData[`${item.field}`]"
+                  style="width: 100%"
+                >
                   <el-option
                     v-for="option in item.options"
                     :value="option.value"
@@ -28,7 +33,10 @@
                 </el-select>
               </template>
               <template v-else-if="item.type === 'datepicker'">
-                <el-date-picker v-bind="item.otherOptions"></el-date-picker>
+                <el-date-picker
+                  v-bind="item.otherOptions"
+                  v-model="formData[`${item.field}`]"
+                ></el-date-picker>
               </template>
             </el-form-item>
           </el-col>
@@ -44,6 +52,10 @@ import { IFormItem } from '../types'
 
 export default defineComponent({
   props: {
+    formData: {
+      type: Object,
+      required: true
+    },
     formItems: {
       type: Array as PropType<IFormItem[]>,
       default: () => []
