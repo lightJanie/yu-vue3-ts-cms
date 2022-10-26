@@ -84,16 +84,16 @@ class YURequest {
         })
     })
   }
-  get<T>(config: YURequestConfig<T>): Promise<T> {
+  get<T = any>(config: YURequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
-  post<T>(config: YURequestConfig<T>): Promise<T> {
+  post<T = any>(config: YURequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
-  delete<T>(config: YURequestConfig<T>): Promise<T> {
+  delete<T = any>(config: YURequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
-  patch<T>(config: YURequestConfig<T>): Promise<T> {
+  patch<T = any>(config: YURequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PATCH' })
   }
 }

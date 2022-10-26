@@ -1,13 +1,18 @@
 <template>
   <div class="user">
     <page-search :formConfig="formConfig"></page-search>
+    <el-table :data="userList" style="width: 100%">
+      <el-table-column prop="name" label="用户名" min-width="180" />
+      <el-table-column prop="realname" label="真实姓名" min-width="180" />
+      <el-table-column prop="cellphone" label="电话号码" min-width="180" />
+    </el-table>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import PageSearch from '@/components/page-search'
-import { useStore } from 'vuex'
+import { useStore } from '@/store'
 
 import { formConfig } from './config/search.config'
 
@@ -25,7 +30,15 @@ export default defineComponent({
         size: 10
       }
     })
-    return { formConfig }
+    const userList = computed(() => store.state.system.userList)
+    const userCount = computed(() => store.state.system.userCount)
+    const propsList = [
+      { prop: 'name', label: '用户名', minWidth: '100' },
+      { prop: 'realname', label: '真实姓名', minWidth: '100' },
+      { prop: 'name', label: '', minWidth: '100' },
+      { prop: 'name', label: '', minWidth: '100' }
+    ]
+    return { formConfig, userList, userCount, propsList }
   }
 })
 </script>

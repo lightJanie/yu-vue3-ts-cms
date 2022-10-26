@@ -12,13 +12,23 @@ const systemModule: Module<ISystemState, IRootState> = {
       userCount: 0
     }
   },
+  mutations: {
+    changeUserList(state, userList: any[]) {
+      state.userList = userList
+    },
+    changeUserCcount(state, userCount: number) {
+      state.userCount = userCount
+    }
+  },
   actions: {
     async getPageListAction({ commit }, payload: any) {
       const pageResult = await getPageListData(
         payload.pageUrl,
         payload.queryInfo
       )
-      console.log(pageResult)
+      const { list, totalCount } = pageResult.data
+      commit('changeUserList', list)
+      commit('changeUserCcount', totalCount)
     }
   }
 }
