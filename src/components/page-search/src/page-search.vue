@@ -6,8 +6,8 @@
       </template>
       <template #footer>
         <div class="handle-btns">
-          <el-button type="primary">重置</el-button>
-          <el-button type="primary">搜索</el-button>
+          <el-button type="primary" @click="handleResetClick">重置</el-button>
+          <el-button type="primary" @click="handleQueryClick">搜索</el-button>
         </div>
       </template>
     </hy-form>
@@ -25,15 +25,28 @@ export default defineComponent({
   components: {
     HyForm
   },
-  setup() {
-    const formData = ref({
-      id: '',
-      name: '',
-      password: '',
-      sport: '',
-      createTime: ''
-    })
-    return { formData }
+  emits: ['resetBtnClick', 'queryBtnClick'],
+  setup(props, { emit }) {
+    // 双向绑定的数据应该是由配置文件的field来决定
+    // 优化一：formData的属性应该动态决定
+    const formItems = props.formConfig.formItems ?? []
+    const formOriginData: any = {}
+    for (const item of formItems) {
+      formOriginData[item.field] = ''
+    }
+    const formData = ref(formOriginData)
+    // 点击重置按钮重置formData
+    const handleResetClick = () => {
+      for (const key in formOriginData) {
+        formData.value[`${key}`] = formOriginData[key]
+      }
+      emit('resetBtnClick')
+    }
+    const handleQueryClick = () => {
+      console.log()
+      emit('queryBtnClick', formData.value)
+    }
+    return { formData, handleResetClick, handleQueryClick }
   }
 })
 </script>

@@ -3,7 +3,7 @@ export const contentTableConfig = {
   propsList: [
     {
       prop: 'name',
-      label: '姓名',
+      label: '角色',
       minWidth: '100'
     },
     {
