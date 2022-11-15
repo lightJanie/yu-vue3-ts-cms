@@ -32,12 +32,16 @@
           <el-button size="small" type="text" :icon="Delete">删除</el-button>
         </div>
       </template>
-      <template #image="scope">
-        <el-image
-          style="width: 60px; height: 60px"
-          :src="scope.row.imgUrl"
-          :preview-src-list="[scope.row.imgUrl]"
-        ></el-image>
+
+      <!-- 在page-content中动态插入剩余的插槽 -->
+      <template
+        v-for="item in otherPropSlots"
+        :key="item.prop"
+        #[item.slotName]="scope"
+      >
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
       </template>
     </hy-table>
   </div>
@@ -83,14 +87,24 @@ export default defineComponent({
       })
     }
     getPageData()
-
+    // 从vuex中获取数据
     const dataList = computed(() =>
       store.getters[`system/pageListData`](props.pageName)
     )
     const dataCount = computed(() =>
       store.getters[`system/pageListCount`](props.pageName)
     )
-    return { dataList, dataCount, getPageData, pageInfo }
+    // 获取其他动态插槽的名称
+    const otherPropSlots = props.contentTableConfig?.propsList.filter(
+      (item: any) => {
+        if (item.slotName === 'status') return false
+        if (item.slotName === 'createAt') return false
+        if (item.slotName === 'updateAt') return false
+        if (item.slotName === 'handler') return false
+        return true
+      }
+    )
+    return { dataList, dataCount, getPageData, pageInfo, otherPropSlots }
   }
 })
 </script>

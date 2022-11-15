@@ -1,8 +1,12 @@
 <template>
   <div class="goods">
-    <page-content
-      :contentTableConfig="contentTableConfig"
-      pageName="goods"
+    <page-content :contentTableConfig="contentTableConfig" pageName="goods">
+      <template #image="scope">
+        <el-image
+          style="width: 60px; height: 60px"
+          :src="scope.row.imgUrl"
+          :preview-src-list="[scope.row.imgUrl]"
+        ></el-image> </template
     ></page-content>
   </div>
 </template>

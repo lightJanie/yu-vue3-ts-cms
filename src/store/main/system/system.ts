@@ -13,7 +13,9 @@ const systemModule: Module<ISystemState, IRootState> = {
       roleList: [],
       roleCount: 0,
       goodsList: [],
-      goodsCount: 0
+      goodsCount: 0,
+      menuList: [],
+      menuCount: 0
     }
   },
   mutations: {
@@ -34,6 +36,12 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeGoodsCount(state, goodsCount: number) {
       state.goodsCount = goodsCount
+    },
+    changeMenuList(state, menuList: any[]) {
+      state.menuList = menuList
+    },
+    changeMenuCount(state, menuCount: number) {
+      state.menuCount = menuCount
     }
   },
   getters: {
@@ -62,6 +70,10 @@ const systemModule: Module<ISystemState, IRootState> = {
           break
         case 'goods':
           pageUrl = '/goods/list'
+          break
+        case 'menu':
+          pageUrl = '/menu/list'
+          break
       }
 
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
@@ -78,6 +90,10 @@ const systemModule: Module<ISystemState, IRootState> = {
         case 'goods':
           commit(`changeGoodsList`, list)
           commit(`changeGoodsCount`, totalCount)
+          break
+        case 'menu':
+          commit(`changeMenuList`, list)
+          commit(`changeMenuCount`, totalCount)
       }
     }
   }
