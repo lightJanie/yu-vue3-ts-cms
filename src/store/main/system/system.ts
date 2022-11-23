@@ -2,14 +2,14 @@ import { Module } from 'vuex'
 import { IRootState } from '@/store/types'
 import { ISystemState } from './types'
 
-import { getPageListData } from '@/service/main/system/system'
+import { deletePageData, getPageListData } from '@/service/main/system/system'
 
 const systemModule: Module<ISystemState, IRootState> = {
   namespaced: true,
   state() {
     return {
-      userList: [],
-      userCount: 0,
+      usersList: [],
+      usersCount: 0,
       roleList: [],
       roleCount: 0,
       goodsList: [],
@@ -20,16 +20,16 @@ const systemModule: Module<ISystemState, IRootState> = {
   },
   mutations: {
     changeUserList(state, userList: any[]) {
-      state.userList = userList
+      state.usersList = userList
     },
     changeUserCount(state, userCount: number) {
-      state.userCount = userCount
+      state.usersCount = userCount
     },
     changeRoleList(state, roleList: any[]) {
       state.roleList = roleList
     },
     changeRoleCount(state, roleCount: number) {
-      state.userCount = roleCount
+      state.roleCount = roleCount
     },
     changeGoodsList(state, goodsList: any[]) {
       state.goodsList = goodsList
@@ -62,7 +62,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       const pageName = payload.pageName
       let pageUrl = ''
       switch (pageName) {
-        case 'user':
+        case 'users':
           pageUrl = '/users/list'
           break
         case 'role':
@@ -79,7 +79,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
       const { list, totalCount } = pageResult.data
       switch (pageName) {
-        case 'user':
+        case 'users':
           commit(`changeUserList`, list)
           commit(`changeUserCount`, totalCount)
           break
@@ -95,6 +95,21 @@ const systemModule: Module<ISystemState, IRootState> = {
           commit(`changeMenuList`, list)
           commit(`changeMenuCount`, totalCount)
       }
+    },
+
+    async deletePageDataAction({ dispatch }, payload: any) {
+      // 1.pageName
+      // 2.id
+      const { pageName, id } = payload
+      const pageUrl = `/${pageName}/${id}`
+      await deletePageData(pageUrl)
+      dispatch('getPageListAction', {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
     }
   }
 }

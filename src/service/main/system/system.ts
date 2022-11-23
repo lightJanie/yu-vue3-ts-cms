@@ -7,3 +7,10 @@ export function getPageListData(url: string, queryInfo: any) {
     data: queryInfo
   })
 }
+
+// url:/users/id
+export function deletePageData(url: string) {
+  return yuRequest.delete<IDataType>({
+    url: url
+  })
+}
