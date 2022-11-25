@@ -9,33 +9,23 @@
       ref="pageContentRef"
       :contentTableConfig="contentTableConfig"
       pageName="users"
+      @newBtnClick="handleNewData"
+      @editBtnClick="handleEditData"
     ></page-content>
-    <div class="page-modal">
-      <el-dialog v-model="dialogVisible" title="新建用户" width="30%" center>
-        <hy-form v-model="" v-bind=""></hy-form>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button @click="dialogVisible = false">Cancel</el-button>
-            <el-button type="primary" @click="dialogVisible = false">
-              Confirm
-            </el-button>
-          </span>
-        </template>
-      </el-dialog>
-    </div>
+    <page-modal ref="pageModalRef" :modalConfig="modalConfig"></page-modal>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 
-import HyForm from '@/base-ui/form'
-
 import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
+import PageModal from '@/components/page-modal'
 
 import { formConfig } from './config/search.config'
 import { contentTableConfig } from './config/content.config'
+import { modalConfig } from './config/modal.config'
 
 import { usePageSearch } from '@/hooks/usePageSearch'
 
@@ -44,18 +34,31 @@ export default defineComponent({
   components: {
     PageSearch,
     PageContent,
-    HyForm
+    PageModal
   },
   setup() {
-    const dialogVisible = ref(true)
     const [pageContentRef, handleResetClick, handleQueryClick] = usePageSearch()
+    const pageModalRef = ref<InstanceType<typeof PageModal>>()
+    const handleNewData = () => {
+      if (pageModalRef.value) {
+        pageModalRef.value.dialogVisible = true
+      }
+    }
+    const handleEditData = (item: any) => {
+      if (pageModalRef.value) {
+        pageModalRef.value.dialogVisible = true
+      }
+    }
     return {
       formConfig,
       contentTableConfig,
       pageContentRef,
       handleResetClick,
       handleQueryClick,
-      dialogVisible
+      modalConfig,
+      handleNewData,
+      handleEditData,
+      pageModalRef
     }
   }
 })
