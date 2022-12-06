@@ -1,6 +1,12 @@
 <template>
   <div class="page-modal">
-    <el-dialog v-model="dialogVisible" title="新建用户" width="30%" center>
+    <el-dialog
+      v-model="dialogVisible"
+      title="新建用户"
+      width="30%"
+      center
+      destroy-on-close
+    >
       <hy-form v-bind="modalConfig" v-model="formData"></hy-form>
       <template #footer>
         <span class="dialog-footer">
