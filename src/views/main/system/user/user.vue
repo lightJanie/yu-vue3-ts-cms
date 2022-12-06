@@ -12,12 +12,16 @@
       @newBtnClick="handleNewData"
       @editBtnClick="handleEditData"
     ></page-content>
-    <page-modal ref="pageModalRef" :modalConfig="modalConfig"></page-modal>
+    <page-modal
+      :defaultInfo="defaultInfo"
+      ref="pageModalRef"
+      :modalConfig="modalConfig"
+    ></page-modal>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 
 import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
@@ -28,6 +32,7 @@ import { contentTableConfig } from './config/content.config'
 import { modalConfig } from './config/modal.config'
 
 import { usePageSearch } from '@/hooks/usePageSearch'
+import { usePageModal } from '@/hooks/use-page-modal'
 
 export default defineComponent({
   name: 'user',
@@ -38,17 +43,8 @@ export default defineComponent({
   },
   setup() {
     const [pageContentRef, handleResetClick, handleQueryClick] = usePageSearch()
-    const pageModalRef = ref<InstanceType<typeof PageModal>>()
-    const handleNewData = () => {
-      if (pageModalRef.value) {
-        pageModalRef.value.dialogVisible = true
-      }
-    }
-    const handleEditData = (item: any) => {
-      if (pageModalRef.value) {
-        pageModalRef.value.dialogVisible = true
-      }
-    }
+    const [pageModalRef, defaultInfo, handleNewData, handleEditData] =
+      usePageModal()
     return {
       formConfig,
       contentTableConfig,
@@ -58,7 +54,8 @@ export default defineComponent({
       modalConfig,
       handleNewData,
       handleEditData,
-      pageModalRef
+      pageModalRef,
+      defaultInfo
     }
   }
 })
