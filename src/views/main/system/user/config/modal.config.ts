@@ -19,7 +19,7 @@ export const modalConfig: IForm = {
       type: 'password',
       label: '用户密码',
       placeholder: '请输入密码',
-      isHidden: false
+      isHidden: true
     },
     {
       field: 'cellphone',
@@ -32,7 +32,10 @@ export const modalConfig: IForm = {
       type: 'select',
       label: '选择部门',
       placeholder: '请选择部门',
-      options: []
+      options: [
+        // { title: '启用', value: 1 },
+        // { title: '禁用', value: 0 }
+      ]
     },
     {
       field: 'roleId',
