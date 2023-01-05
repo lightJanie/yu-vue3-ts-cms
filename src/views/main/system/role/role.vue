@@ -10,11 +10,13 @@
     <page-modal
       ref="pageModalRef"
       :defaultInfo="defaultInfo"
+      :otherInfo="otherInfo"
       :modalConfig="modalConfig"
       pageName="role"
     >
       <div class="menu-tree">
         <el-tree
+          ref="elTreeRef"
           :data="menus"
           show-checkbox
           node-key="id"
@@ -22,6 +24,7 @@
             children: 'children',
             label: 'name'
           }"
+          @check="handleCheckChange"
         >
         </el-tree>
       </div>
@@ -30,8 +33,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref, nextTick } from 'vue'
 import { useStore } from '@/store'
+import { menuMapLeafKeys } from '@/utils/map-menus'
+
+import { ElTree } from 'element-plus'
 
 import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
@@ -51,11 +57,29 @@ export default defineComponent({
     PageModal
   },
   setup() {
+    const elTreeRef = ref<InstanceType<typeof ElTree>>()
+    const editCallback = (item: any) => {
+      const leafKeys = menuMapLeafKeys(item.menuList)
+      nextTick(() => {
+        console.log(elTreeRef.value)
+        elTreeRef.value?.setCheckedKeys(leafKeys, false)
+      })
+    }
     const [pageModalRef, defaultInfo, handleNewData, handleEditData] =
-      usePageModal()
+      usePageModal(undefined, editCallback)
 
     const store = useStore()
     const menus = computed(() => store.state.entireMenu)
+
+    const otherInfo = ref({})
+    const handleCheckChange = (data1: any, data2: any) => {
+      console.log(data1)
+      const checkedKeys = data2.checkedKeys
+      const halfCheckedKeys = data2.halfCheckedKeys
+      const menuList = [...checkedKeys, ...halfCheckedKeys]
+      console.log(menuList)
+      otherInfo.value = { menuList }
+    }
     return {
       contentTableConfig,
       searchFormConfig,
@@ -64,7 +88,10 @@ export default defineComponent({
       defaultInfo,
       handleNewData,
       handleEditData,
-      menus
+      menus,
+      handleCheckChange,
+      otherInfo,
+      elTreeRef
     }
   }
 })
