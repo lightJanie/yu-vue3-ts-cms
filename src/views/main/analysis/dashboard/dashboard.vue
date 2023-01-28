@@ -15,8 +15,22 @@ export default defineComponent({
   setup() {
     const divRef = ref<HTMLElement>()
     onMounted(() => {
-      const echartInstance = echarts.init(divRef.value!)
+      const echartInstance = echarts.init(divRef.value!, 'light', {
+        renderer: 'svg'
+      })
       var option = {
+        title: {
+          text: 'echarts渲染'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross'
+          }
+        },
+        legend: {
+          // data:['']
+        },
         xAxis: {
           type: 'category',
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -26,7 +40,14 @@ export default defineComponent({
         },
         series: [
           {
+            name: '数量',
             data: [820, 932, 901, 934, 1290, 1330, 1320],
+            type: 'bar',
+            smooth: true
+          },
+          {
+            name: '价格',
+            data: [82, 92, 91, 94, 190, 130, 120],
             type: 'line',
             smooth: true
           }
