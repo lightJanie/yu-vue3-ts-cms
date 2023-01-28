@@ -1,64 +1,106 @@
 <template>
   <div class="dashboard">
-    <div ref="divRef" :style="{ width: '300px', height: '300px' }">
-      dashboard
-    </div>
+    <el-row :gutter="10">
+      <el-col :span="7">
+        <yu-card title="分类商品数量(饼图)">
+          <pie-echart :pieData="categoryGoodsCount"></pie-echart>
+        </yu-card>
+      </el-col>
+      <el-col :span="10">
+        <yu-card title="不同城市商品销量">
+          <map-echart :mapData="addressGoodsSale"></map-echart>
+        </yu-card>
+      </el-col>
+      <el-col :span="7">
+        <yu-card title="分类商品数量(玫瑰图)">
+          <rose-echart :roseData="categoryGoodsCount"></rose-echart>
+        </yu-card>
+      </el-col>
+    </el-row>
+    <el-row :gutter="10" class="content-row">
+      <el-col :span="12">
+        <yu-card title="分类商品的销量">
+          <line-echart v-bind="categoryGoodsSale"></line-echart>
+        </yu-card>
+      </el-col>
+      <el-col :span="12">
+        <yu-card title="分类商品的收藏">
+          <bar-echart v-bind="categoryGoodsFavor"></bar-echart>
+        </yu-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue'
-import * as echarts from 'echarts'
+import { defineComponent, computed } from 'vue'
+import { useStore } from 'vuex'
+
+import YuCard from '@/base-ui/card'
+import {
+  PieEchart,
+  RoseEchart,
+  LineEchart,
+  BarEchart,
+  MapEchart
+} from '@/components/page-echarts'
 
 export default defineComponent({
   name: 'dashboard',
+  components: {
+    YuCard,
+    PieEchart,
+    RoseEchart,
+    LineEchart,
+    BarEchart,
+    MapEchart
+  },
   setup() {
-    const divRef = ref<HTMLElement>()
-    onMounted(() => {
-      const echartInstance = echarts.init(divRef.value!, 'light', {
-        renderer: 'svg'
+    const store = useStore()
+    store.dispatch('dashboard/getDashboardDataAction')
+    // 获取数据
+    const categoryGoodsCount = computed(() => {
+      return store.state.dashboard.categoryGoodsCount.map((item: any) => {
+        return { name: item.name, value: item.goodsCount }
       })
-      var option = {
-        title: {
-          text: 'echarts渲染'
-        },
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross'
-          }
-        },
-        legend: {
-          // data:['']
-        },
-        xAxis: {
-          type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [
-          {
-            name: '数量',
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
-            type: 'bar',
-            smooth: true
-          },
-          {
-            name: '价格',
-            data: [82, 92, 91, 94, 190, 130, 120],
-            type: 'line',
-            smooth: true
-          }
-        ]
-      }
-
-      echartInstance.setOption(option)
     })
-    return { divRef }
+    const categoryGoodsSale = computed(() => {
+      const xLabels: string[] = []
+      const values: any[] = []
+      const categoryGoodsSale = store.state.dashboard.categoryGoodsSale
+      for (const item of categoryGoodsSale) {
+        xLabels.push(item.name)
+        values.push(item.goodsCount)
+      }
+      return { xLabels, values }
+    })
+    const categoryGoodsFavor = computed(() => {
+      const xLabels: string[] = []
+      const values: any[] = []
+      const categoryGoodsFavor = store.state.dashboard.categoryGoodsFavor
+      for (const item of categoryGoodsFavor) {
+        xLabels.push(item.name)
+        values.push(item.goodsFavor)
+      }
+      return { xLabels, values }
+    })
+    const addressGoodsSale = computed(() => {
+      return store.state.dashboard.addressGoodsSale.map((item: any) => {
+        return { name: item.address, value: item.count }
+      })
+    })
+    return {
+      categoryGoodsCount,
+      categoryGoodsSale,
+      categoryGoodsFavor,
+      addressGoodsSale
+    }
   }
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.content-row {
+  margin-top: 20px;
+}
+</style>

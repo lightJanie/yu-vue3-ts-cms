@@ -28,7 +28,8 @@
       "@/*": ["src/*"]
     },
     // 可以指定在项目中可以使用哪些库的类型(Proxy/Window/Document)
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "resolveJsonModule": true
   },
   "include": [
     "src/**/*.ts",
