@@ -9,7 +9,6 @@ import {
 
 import { IDashboardState } from './types'
 import { IRootState } from '@/store/types'
-import category from '@/router/main/product/category/category'
 
 const dashboardModule: Module<IDashboardState, IRootState> = {
   namespaced: true,
